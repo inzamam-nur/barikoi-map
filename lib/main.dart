@@ -2,12 +2,14 @@ import 'package:barikoi/app/pages/home/home.dart';
 import 'package:barikoi/app/pages/home/home_bindings.dart';
 import 'package:barikoi/app/pages/splash/splash_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 import 'app/pages/splash/splash_binding.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load();
   runApp(const MyApp());
 }
 
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
     ),
     GetPage(
       name: '/home',
-      page: () => const HomeView(),
+      page: () =>  HomeView(),
       binding: HomeBindings(),
     ),
   ];

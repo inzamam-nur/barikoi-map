@@ -1,3 +1,4 @@
+import 'package:barikoi/app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -69,7 +70,7 @@ class DialogHelper{
     ).then((value){ if (function != null) function();});
   }
 
-  static onDefaultButtonSheet(Widget widget, {double? dialogHeight , Function? function }){
+  static onDefaultButtonSheet(Widget widget, {double? dialogHeight , Function? function,  }){
     showModalBottomSheet(
         context: Get.context!,
         backgroundColor: Colors.white,
@@ -80,35 +81,40 @@ class DialogHelper{
                 topRight: Radius.circular(30))
         ),
         builder: (context){
-          return Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Container(
-                height: dialogHeight,
-                padding: const EdgeInsets.only(top: 8),
-                child: Stack(
-                  children: [
-                    Positioned(left: 0,right: 0,top: 0,
-                      child: FractionallySizedBox(
-                        widthFactor: 0.1,
-                        child: Container(margin: const EdgeInsets.symmetric(vertical: 12.0),
-                          child: Container(height: 5.0,
-                            decoration: BoxDecoration(color: Colors.grey,
-                              borderRadius: BorderRadius.circular(2.5),
+          return Stack(
+            clipBehavior: Clip.none,
+            children:[
+              Padding(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Container(
+                    height: dialogHeight,
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Stack(
+                      children: [
+                        Positioned(left: 0,right: 0,top: 0,
+                          child: FractionallySizedBox(
+                            widthFactor: 0.1,
+                            child: Container(margin: const EdgeInsets.symmetric(vertical: 12.0),
+                              child: Container(height: 5.0,
+                                decoration: BoxDecoration(color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(2.5),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Positioned(right: 4,top: 0,
-                        child: IconButton(
-                          icon: const Icon(Icons.clear,size: 32),
-                          onPressed: () { Get.back();},
-                        )
-                    ),
-                    widget,
-                  ],
-                )
-            ),
+                        Positioned(right: 4,top: 0,
+                            child: IconButton(
+                              icon: const Icon(Icons.clear,size: 32),
+                              onPressed: () { Get.back();},
+                            )
+                        ),
+                        widget,
+                      ],
+                    )
+                ),
+              ),
+            ],
           );
         }
     ).then((value){ if (function != null) function();});

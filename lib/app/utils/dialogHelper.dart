@@ -37,38 +37,6 @@ class DialogHelper{
     );
   }
 
-  static void showSuccessDialog (Widget widget,{double? dialogHeight, bool cancelBtnHide = true, Function? function }){
-    showDialog(
-        context: Get.context!,
-        barrierDismissible: false,
-        builder: (BuildContext cxt) {
-          return Align( alignment: Alignment.center,
-            child: Padding( padding: const EdgeInsets.all(16),
-              child: Material( color: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                child: SizedBox(
-                  height: dialogHeight ?? 300,
-                  width: double.infinity,
-                  child: Stack(
-                    children: [
-                      Positioned(right: 4, top: 0,
-                          child: Visibility(
-                              visible:cancelBtnHide,
-                              child: IconButton(icon: const Icon(Icons.clear, size: 32), onPressed: () => Get.offAllNamed('/splitterInfoPage'))
-                          )
-                      ),
-                      Positioned(left: 16,right: 16,bottom: 0,top: 0,
-                          child: widget),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        }
-    ).then((value){ if (function != null) function();});
-  }
 
   static onDefaultButtonSheet(Widget widget, {double? dialogHeight , Function? function,  }){
     showModalBottomSheet(

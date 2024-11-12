@@ -1,8 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:barikoi/app/data/Model/Line_Model.dart';
-import 'package:barikoi/app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,12 +15,13 @@ class HomeController extends GetxController {
   Line? currentLine;
   static var currentPos = Rx<LatLng>(const LatLng(23.835677, 90.380325));
   var clickedPos = Rx<LatLng>(const LatLng(23.835677, 90.380325));
-  static const styleId = 'osm-liberty'; // barikoi map style id
-  static var apiKey = dotenv.get('API_KEY');// barikoi API key
+  static const styleId = 'osm-liberty';
+  static var apiKey = dotenv.get('API_KEY');
   static  String mapUrl = 'https://map.barikoi.com/styles/$styleId/style.json?key=$apiKey';
   MaplibreMapController? mController;
   RxBool showPanel=false.obs;
   RxBool showInfo=false.obs;
+  RxBool cleanData=false.obs;
   var placeInfo=''.obs;
   RxList<List<double>> rxCoordinates = RxList.empty();
 
@@ -41,7 +39,6 @@ class HomeController extends GetxController {
       currentPos.value=pos;
       addMarker(pos);
       mController?.moveCamera(CameraUpdate.newLatLng(pos));
-
     });
   }
   Future<Position> getCurrentLocation() async {
@@ -115,7 +112,16 @@ class HomeController extends GetxController {
       print("No coordinates available to draw the line.");
     }
   }
-
+  void cleanALl(){
+    addMarker(currentPos.value);
+    mController?.moveCamera(CameraUpdate.newLatLng(HomeController.currentPos.value));
+    updateMarker(HomeController.currentPos.value);
+    if (currentLine != null) {
+    mController?.removeLine(currentLine!);
+    currentLine = null;
+    }
+    cleanData.value=false;
+  }
   void updateMarker(LatLng newPosition) {
     if (markerSymbol != null) {
       SymbolOptions updatedSymbolOptions = SymbolOptions(

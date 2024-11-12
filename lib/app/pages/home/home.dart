@@ -26,6 +26,7 @@ class HomeView extends GetView<HomeController> {
             controller.showPanel.value=true;
             DialogHelper.onDefaultButtonSheet(bottomBar(),dialogHeight: 150);
             await controller.callReverseGeocodeApi(latLng.latitude, latLng.longitude);
+            controller.cleanData.value=true;
           },
           onStyleLoadedCallback: () async {
             await controller.addImageFromAsset("custom-marker", "assets/marker.png");
@@ -33,6 +34,20 @@ class HomeView extends GetView<HomeController> {
           },
           styleString:HomeController.mapUrl,
         ),
+       Obx(()=>
+       controller.cleanData.value?
+       Positioned(
+           bottom: 200,
+           right: 20,
+           child:GestureDetector(
+               onTap: ()=>{
+                 controller.cleanALl()
+               },
+               child: const Icon(Icons.my_location_sharp,size: 50,color: AppColors.accentPrimary,)
+           )
+       ):const SizedBox()
+       )
+
         ]
       ),
     );

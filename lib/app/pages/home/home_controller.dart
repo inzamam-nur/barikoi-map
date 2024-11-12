@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:barikoi/app/data/Model/Line_Model.dart';
+import 'package:barikoi/app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -107,7 +108,7 @@ class HomeController extends GetxController {
         LineOptions(
           geometry: lineGeometry,
           lineColor: "#0088FF",
-          lineWidth: 5.0,
+          lineWidth: 8.0,
         ),
       );
     } else {
